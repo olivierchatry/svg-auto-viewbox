@@ -1,0 +1,20 @@
+language: cpp
+
+os:
+  - linux
+  - osx
+
+
+before_install:
+  - if [ $TRAVIS_OS_NAME == linux ]; then sudo apt-get update -qq && sudo apt-get install -y --no-install-recommends clang libssl-dev && git clone --recursive https://github.com/premake/premake-core.git && cd premake-core && make -f Bootstrap.mak $TRAVIS_OS_NAME && cp bin/release/premake5 ../Platforms && cd ..; fi
+  - if [ $TRAVIS_OS_NAME == osx ]; then git clone --recursive https://github.com/premake/premake-core.git && cd premake-core && make -f Bootstrap.mak $TRAVIS_OS_NAME && cp bin/release/premake5 ../Platforms && cd ..; fi
+
+install:
+  - git submodule update --init --recursive
+  - cd Platforms && ./premake5 gmake && cd ..
+
+script:
+  - if [ $TRAVIS_OS_NAME == linux ]; then make -C build/gmake svg-auto-viewbox config=release; fi
+  - if [ $TRAVIS_OS_NAME == osx ];  then make -C build/gmake config=release; fi
+notifications:
+  email: false

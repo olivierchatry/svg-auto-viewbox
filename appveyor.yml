@@ -1,0 +1,23 @@
+os:
+  - Visual Studio 2015
+
+environment:
+  matrix:
+    - TOOLSET: vs2015
+
+install:
+  - git submodule update --init --recursive
+  - cd Platforms && premake5.exe %TOOLSET% && cd ..
+
+configuration: Release
+
+build:
+  project: build/$(TOOLSET)/svg-auto-viewbox.sln
+
+after_build:
+  - cd build/bin && 7z a ../../svg-auto-viewbox.zip -r *.* && cd ../..
+
+artifacts:
+  - path: svg-auto-viewbox.zip
+    name: binary
+    type: zip
