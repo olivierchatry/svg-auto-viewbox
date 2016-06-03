@@ -11,3 +11,9 @@ Then go to the "build" folder, and launch either **make** or **visual studio** f
 
 # Can I use it ?
 Of course, just drop me a line.
+
+# Externals
+This software make use of :
+* [nanosvg](https://github.com/memononen/nanosvg)
+* [glm](http://glm.g-truc.net/)
+* [tinyxml2](http://www.grinninglizard.com/tinyxml2/)
